@@ -28,8 +28,18 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $roles = $request->user()->role;
+        switch ($roles) {
+            case 'admin':
+                $url = route('admin.dashboard');
+                break;
+            case 'customer':
+                $url = route('customer.dashboard');
+                break;
+            default:
+                $url = ('dashboard');
+        }
+        return redirect()->intended($url)->with('success', 'LoggIn Successful !');
     }
 
     /**
