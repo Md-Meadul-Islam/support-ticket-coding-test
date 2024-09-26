@@ -35,7 +35,39 @@
       <section class="py-5">
         <div class="row g-0">
             <div class="col-12">
-
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <th>#</th>
+                  <th>Ticket Id</th>
+                  <th>Subject</th>
+                  <th>Description</th>
+                  <th>Action</th>
+                  <th>Created_at</th>
+                </thead>
+                <tbody>
+                  @php
+                      // dd($tickets);
+                  @endphp
+                  @foreach ($tickets as $key=>$ticket)
+                  <tr>
+                    <td>{{$key+1}}</td>
+                    <td>{{$ticket['id']}}</td>
+                    <td>{{$ticket['subject']}}</td>
+                    <td>{{$ticket['desc']}}</td>
+                    <td>
+                      @if ($ticket['status']=='open')
+                        <a href="#" class="btn btn-danger">Close</a>
+                        @else
+                        <a href="#" class="btn btn-success">Open</a>
+                    @endif
+                  </td>
+                  <td>
+                    {{$ticket['created_at']}}
+                  </td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
             </div>
         </div>    
     </section>  
