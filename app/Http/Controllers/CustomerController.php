@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Events\Ticket;
+use App\Mail\TicketCreated;
 use App\Models\Tickets;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
     public function index()
     {
         $userId = Auth::user()->id;
-        $tickets = Tickets::where('user_id', $userId)->get();
+        $tickets = Tickets::where('user_id', $userId)->with('response')->orderBy('id', 'DESC')->get();
         return view('customers.dashboard', compact('tickets'));
     }
     /**
@@ -31,39 +33,7 @@ class CustomerController extends Controller
             'subject' => $request->subject,
             'desc' => $request->desc,
         ]);
-        event(new Ticket($ticket));
+        Mail::to('mdmeadulislam@gmail.com')->send(new TicketCreated($ticket));
         return redirect()->route('customer.dashboard');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

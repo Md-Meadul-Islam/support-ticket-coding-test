@@ -74,7 +74,11 @@
                 <tr class="ticket" data-id="{{$ticket->id}}">
                   <td>{{$key+1}}</td>
                   <td>{{$ticket->subject}}</td>
-                  <td>{{$ticket->desc}}</td>
+                  <td>{{$ticket->desc}}
+                    @if ($ticket->response)
+                    <p class="border border-2 p-1 bg-success text-white">Response: {{$ticket->response->response_text}}</p>
+                    @endif                    
+                  </td>
                   <td>
                     @if ($ticket->status=='open')
                     <a class="text-success">Opened</a>

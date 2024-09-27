@@ -21,8 +21,7 @@ class TicketCreated extends Mailable
     }
     public function build()
     {
-        $user = Auth::user();
-        return $this->from($user->email, $user->name)
+        return $this->from(config('mail.from.address'))
             ->markdown('emails.ticket_created')
             ->subject('New Ticket Created')
             ->with([

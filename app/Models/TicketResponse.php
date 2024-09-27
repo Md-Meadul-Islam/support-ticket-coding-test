@@ -9,4 +9,8 @@ class TicketResponse extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public function ticket()
+    {
+        return $this->belongsTo(Tickets::class, 'ticket_id');
+    }
 }
