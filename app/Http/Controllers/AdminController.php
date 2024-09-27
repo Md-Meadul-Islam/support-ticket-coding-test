@@ -7,12 +7,9 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $tickets = Tickets::all()->toArray();
+        $tickets = Tickets::orderBy('id', 'DESC')->with('user:id,name,email')->get();
         return view('admin.dashboard', compact('tickets'));
     }
 

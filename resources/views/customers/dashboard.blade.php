@@ -32,11 +32,64 @@
           </div>
         </div>
       </nav>  
+      <section class="p-3">
+       <div class="row g-0">
+        <div class="col-12">
+          <div class="card p-2">
+            <div class="w-100">
+              <h2>Open New Ticket</h2>
+            </div>
+            <form action="{{route('createticket')}}" method="post">
+              @csrf
+              @method('POST')
+              <div class="py-1">
+                <label for="subject">Subject</label>
+              <input type="text" name="subject" id="subject" class="form-control" placeholder="Please mention subject">
+              </div>
+              <div class="py-1">
+                <label for="desc">Description</label>
+                <textarea name="desc" id="desc" class="form-control"></textarea>
+              </div>
+              <div class="py-1">
+                <button type="submit" class="btn btn-success"value="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+       </div>
+      </section>
       <section class="py-5">
         <div class="row g-0">
-            <div class="col-12">
-
-            </div>
+          <div class="col-12">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <th>#</th>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Created_at</th>
+              </thead>
+              <tbody>
+                @foreach ($tickets as $key=>$ticket)
+                <tr class="ticket" data-id="{{$ticket->id}}">
+                  <td>{{$key+1}}</td>
+                  <td>{{$ticket->subject}}</td>
+                  <td>{{$ticket->desc}}</td>
+                  <td>
+                    @if ($ticket->status=='open')
+                    <a class="text-success">Opened</a>
+                    @else
+                    <a class="text-danger">Closed</a>
+                  @endif
+                </td>
+                <td>
+                  {{$ticket->created_at->diffForHumans()}}
+                </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
         </div>    
     </section>  
     <script src="{{asset('files/jquery.min.js')}}"></script>

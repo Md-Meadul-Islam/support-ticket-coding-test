@@ -2,32 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Ticket;
+use App\Models\Tickets;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('customers.dashboard');
+        $userId = Auth::user()->id;
+        $tickets = Tickets::where('user_id', $userId)->get();
+        return view('customers.dashboard', compact('tickets'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'subject' => ['required', 'string', 'max:255'],
+            'desc' => ['required', 'string', 'max:500'],
+        ]);
+
+        $ticket = Tickets::create([
+            'user_id' => Auth::user()->id,
+            'subject' => $request->subject,
+            'desc' => $request->desc,
+        ]);
+        event(new Ticket($ticket));
+        return redirect()->route('customer.dashboard');
     }
 
     /**

@@ -13,6 +13,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.dashboard');
+    Route::post('/createticket', [CustomerController::class, 'store'])->name('createticket');
 });
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');

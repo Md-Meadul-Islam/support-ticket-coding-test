@@ -38,31 +38,30 @@
               <table class="table table-bordered table-striped">
                 <thead>
                   <th>#</th>
-                  <th>Ticket Id</th>
                   <th>Subject</th>
                   <th>Description</th>
                   <th>Action</th>
+                  <th>User</th>
                   <th>Created_at</th>
                 </thead>
                 <tbody>
-                  @php
-                      // dd($tickets);
-                  @endphp
                   @foreach ($tickets as $key=>$ticket)
-                  <tr>
+                  <tr class="ticket" data-id="{{$ticket->id}}">
                     <td>{{$key+1}}</td>
-                    <td>{{$ticket['id']}}</td>
-                    <td>{{$ticket['subject']}}</td>
-                    <td>{{$ticket['desc']}}</td>
+                    <td>{{$ticket->subject}}</td>
+                    <td>{{$ticket->desc}}</td>
                     <td>
-                      @if ($ticket['status']=='open')
-                        <a href="#" class="btn btn-danger">Close</a>
+                      @if ($ticket->status=='open')
+                        <a class="closeticket btn btn-danger cursor-pointer">Close</a>
                         @else
-                        <a href="#" class="btn btn-success">Open</a>
+                        <a class="openticket btn btn-success cursor-pointer">Open</a>
                     @endif
                   </td>
+                  <td class="userinfo" data-id="{{$ticket->user->id}}">
+                    {{$ticket->user->name}} | {{$ticket->user->email}}
+                  </td>
                   <td>
-                    {{$ticket['created_at']}}
+                    {{$ticket->created_at->diffForHumans()}}
                   </td>
                   </tr>
                   @endforeach

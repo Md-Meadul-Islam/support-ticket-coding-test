@@ -33,11 +33,8 @@ class AuthenticatedSessionController extends Controller
             case 'admin':
                 $url = route('admin.dashboard');
                 break;
-            case 'customer':
-                $url = route('customer.dashboard');
-                break;
             default:
-                $url = ('dashboard');
+                $url = route('customer.dashboard');
         }
         return redirect()->intended($url)->with('success', 'LoggIn Successful !');
     }
