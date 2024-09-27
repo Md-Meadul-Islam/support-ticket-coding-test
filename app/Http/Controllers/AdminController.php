@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TicketResponse;
 use App\Models\Tickets;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -12,26 +14,24 @@ class AdminController extends Controller
         $tickets = Tickets::orderBy('id', 'DESC')->with('user:id,name,email')->get();
         return view('admin.dashboard', compact('tickets'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function createResponse(Request $request)
     {
-        //
+        $ticket = Tickets::where('id', $request->id)->first();
+        return view('admin.createresponse', compact('ticket'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function storeResponse(Request $request)
     {
-        //
+        header('Content-type: application/json');
+        $request->validate([
+            'response' => ['required', 'string', 'max:500'],
+        ]);
+        $ticket = TicketResponse::create([
+            'ticket_id' => $request->id,
+            'admin_id' => Auth::user()->id,
+            'response_text' => $request->response,
+        ]);
+        echo json_encode(['success' => true, 'message' => 'Response added successfully !']);
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //

@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
             default:
                 $url = route('customer.dashboard');
         }
-        return redirect()->intended($url)->with('success', 'LoggIn Successful !');
+        return redirect()->intended($url)->with('success', 'LogIn Successful !');
     }
 
     /**

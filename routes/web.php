@@ -17,6 +17,8 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
 });
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/createresponse', [AdminController::class, 'createResponse']);
+    Route::post('/storeresponse', [AdminController::class, 'storeResponse'])->name('store.response');
 });
 
 

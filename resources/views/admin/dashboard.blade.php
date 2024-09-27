@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin | Dashboard</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('files/bootstrap.css')}}">
 </head>
 <body>
@@ -51,6 +52,7 @@
                     <td>{{$ticket->subject}}</td>
                     <td>{{$ticket->desc}}</td>
                     <td>
+                        <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticmodal" id="responsemodal">Respond</a>
                       @if ($ticket->status=='open')
                         <a class="closeticket btn btn-danger cursor-pointer">Close</a>
                         @else
@@ -70,7 +72,16 @@
             </div>
         </div>    
     </section>  
+<!-- Modal -->
+<div class="modal fade"  id="staticmodal" data-bs-backdrop="static" data-bs-keyboard="false"
+tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
     <script src="{{asset('files/jquery.min.js')}}"></script>
     <script src="{{asset('files/bootstrap5.3.3.min.js')}}"></script>
+    @include('admin.script');
 </body>
 </html>
