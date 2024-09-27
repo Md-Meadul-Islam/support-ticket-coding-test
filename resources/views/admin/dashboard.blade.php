@@ -50,13 +50,17 @@
                   <tr class="ticket" data-id="{{$ticket->id}}">
                     <td>{{$key+1}}</td>
                     <td>{{$ticket->subject}}</td>
-                    <td>{{$ticket->desc}}</td>
+                    <td>{{$ticket->desc}}
+                      @if ($ticket->response)
+                      <p class="border border-2 bg-secondary text-white">{{$ticket->response->response_text}}</p>
+                      @endif                      
+                    </td>
                     <td>
-                        <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticmodal" id="responsemodal">Respond</a>
+                        <a class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#staticmodal" id="responsemodal">Respond</a>
                       @if ($ticket->status=='open')
-                        <a class="closeticket btn btn-danger cursor-pointer">Close</a>
+                        <a class="closeticket btn btn-danger btn-sm cursor-pointer">Close</a>
                         @else
-                        <a class="openticket btn btn-success cursor-pointer">Open</a>
+                        <a class="openticket btn btn-success btn-sm cursor-pointer">Open</a>
                     @endif
                   </td>
                   <td class="userinfo" data-id="{{$ticket->user->id}}">

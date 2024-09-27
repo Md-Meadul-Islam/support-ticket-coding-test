@@ -13,4 +13,8 @@ class Tickets extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function response()
+    {
+        return $this->hasOne(TicketResponse::class, 'ticket_id');
+    }
 }

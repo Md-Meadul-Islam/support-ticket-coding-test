@@ -22,6 +22,23 @@
                     }
                 })
             }
+            if ($(e.target).closest('.closeticket').length) {
+                let $this = $(e.target).closest('.closeticket');
+                let row = $this.closest('tr');
+                let td = $this.closest('td');
+                let id = row.data('id');
+                $.ajax({
+                    url: 'changestatus',
+                    data: { id: id },
+                    method: 'GET',
+                    success: function (res) {
+                        if (res.success) {
+                            $this.remove();
+                            td.append('<a class="openticket btn btn-success btn-sm cursor-pointer">Open</a>');
+                        }
+                    }
+                })
+            }
         });
 
 
